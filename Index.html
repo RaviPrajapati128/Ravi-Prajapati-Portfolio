@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ravi Prajapati | Data Science Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Space+Grotesk:wght@300;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
+    <style>
+        :root {
+            --accent: #00d2ff;
+            --accent-glow: rgba(0, 210, 255, 0.4);
+            --bg: #05070a;
+            --surface: #0d1117;
+            --text-main: #e6edf3;
+            --text-dim: #8b949e;
+        }
+
+        [data-theme="light"] {
+            --bg: #ffffff;
+            --surface: #f0f2f5;
+            --text-main: #1a1a1a;
+            --text-dim: #4b4b4b;
+            --accent: #0077ff;
+        }
+
+        * { box-sizing: border-box; scroll-behavior: smooth; }
+        body { 
+            margin: 0; 
+            font-family: 'Space Grotesk', sans-serif; 
+            background-color: var(--bg); 
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s;
+        }
+
+        #neural-canvas {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        h1, h2, h3, .mono { font-family: 'JetBrains Mono', monospace; }
+
+        nav {
+            position: fixed;
+            top: 0; width: 100%;
+            background: rgba(5, 7, 10, 0.85);
+            backdrop-filter: blur(12px);
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
+            padding: 0.8rem 2rem; 
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0, 210, 255, 0.1);
+        }
+        [data-theme="light"] nav { background: rgba(255, 255, 255, 0.85); }
+
+        .nav-links { display: flex; align-items: center; }
+
+        nav a { 
+            margin: 0 15px; 
+            text-decoration: none; 
+            color: var(--text-dim); 
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            transition: 0.3s;
+        }
+        nav a:hover { color: var(--accent); text-shadow: 0 0 10px var(--accent); }
+
+        #theme-toggle {
+            background: none;
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            padding: 6px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: 0.3s;
+        }
+
+        .download-btn {
+            background: var(--accent);
+            color: #fff;
+            padding: 8px 18px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: bold;
+            transition: 0.3s;
+            border: none;
+        }
+        .download-btn:hover { 
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px var(--accent-glow);
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 100px 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .hero-content { border-left: 3px solid var(--accent); padding-left: 30px; }
+        .glitch {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            color: var(--accent);
+            margin: 0;
+        }
+
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 20px;
+            margin-bottom: 30px;
+        }
+        .skill-chip {
+            background: rgba(0, 210, 255, 0.05);
+            border: 1px solid rgba(0, 210, 255, 0.2);
+            padding: 8px 18px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            transition: 0.3s;
+            color: var(--text-main);
+        }
+        .skill-chip:hover {
+            background: var(--accent);
+            color: #fff;
+            transform: scale(1.05);
+        }
+
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+        }
+        .project-card {
+            background: var(--surface);
+            padding: 30px;
+            border-radius: 16px;
+            border: 1px solid #21262d;
+            transition: 0.4s;
+            display: flex;
+            flex-direction: column;
+        }
+        .project-card:hover { border-color: var(--accent); transform: translateY(-8px); }
+        
+        .live-link {
+            margin-top: auto;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--accent);
+            text-decoration: none;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .project-title-link {
+            color: inherit;
+            text-decoration: none;
+        }
+        .project-title-link:hover {
+            color: var(--accent);
+        }
+
+        .timeline-item {
+            padding: 20px;
+            border-left: 2px dashed var(--accent);
+            margin-left: 10px;
+            position: relative;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -7px; top: 25px;
+            width: 12px; height: 12px;
+            background: var(--accent);
+            border-radius: 50%;
+        }
+
+        .socials { margin-top: 30px; }
+        .socials a {
+            color: var(--text-main);
+            font-size: 1.5rem;
+            margin-right: 20px;
+            transition: 0.3s;
+        }
+        .socials a:hover { color: var(--accent); }
+
+        footer { text-align: center; padding: 50px; color: var(--text-dim); font-size: 0.8rem; }
+    </style>
+</head>
+<body>
+
+<canvas id="neural-canvas"></canvas>
+
+<nav>
+    <button id="theme-toggle"><i class="fas fa-moon"></i></button>
+    <div class="nav-links">
+        <a href="#home">HOME</a>
+        <a href="#skills">SKILLS</a>
+        <a href="#projects">PROJECTS</a>
+        <a href="#education">EDUCATION</a>
+    </div>
+    <a href="#" class="download-btn">RESUME <i class="fas fa-download"></i></a>
+</nav>
+
+<section class="container" id="home">
+    <div class="hero-content">
+        <p class="mono" style="color: var(--accent); letter-spacing: 3px;">[ SYSTEM READY ]</p>
+        <h1 class="glitch">RAVI PRAJAPATI</h1>
+        <p style="font-size: 1.4rem; color: var(--text-dim); max-width: 700px;">
+            Expertise in <span id="typed" style="color: var(--accent); font-weight: 600;"></span>
+        </p>
+        <p style="max-width: 600px;">
+            Enthusiastic Data Science fresher dedicated to transforming raw data into actionable insights through Python, SQL, and machine learning.
+        </p>
+        <div class="socials">
+            <a href="https://github.com/RaviPrajapati128" target="_blank"><i class="fab fa-github"></i></a>
+            <a href="https://www.linkedin.com/in/ravi-prajapati-301804388/" target="_blank"><i class="fab fa-linkedin"></i></a>
+            <a href="mailto:prajapatiravi74753@gmail.com"><i class="fas fa-envelope"></i></a>
+        </div>
+    </div>
+</section>
+
+<section class="container" id="skills">
+    <h2 class="mono">// TECHNICAL_SPECS</h2>
+    
+    <h3 class="mono" style="font-size: 0.9rem; color: var(--accent);">01. PROGRAMMING & LIBRARIES</h3>
+    <div class="skills-container">
+        <div class="skill-chip">Python</div>
+        <div class="skill-chip">SQL</div>
+        <div class="skill-chip">Pandas</div>
+        <div class="skill-chip">NumPy</div>
+        <div class="skill-chip">Matplotlib</div>
+        <div class="skill-chip">Seaborn</div>
+        <div class="skill-chip">Scikit-learn</div>
+    </div>
+
+    <h3 class="mono" style="font-size: 0.9rem; color: var(--accent);">02. MACHINE LEARNING & ANALYSIS</h3>
+    <div class="skills-container">
+        <div class="skill-chip">Regression</div>
+        <div class="skill-chip">Classification</div>
+        <div class="skill-chip">Clustering</div>
+        <div class="skill-chip">Predictive Modeling</div>
+        <div class="skill-chip">Model Evaluation</div>
+        <div class="skill-chip">Statistical Analysis</div>
+        <div class="skill-chip">Data Cleaning</div>
+        <div class="skill-chip">Data Wrangling</div>
+        <div class="skill-chip">Exploratory Data Analysis</div>
+    </div>
+
+    <h3 class="mono" style="font-size: 0.9rem; color: var(--accent);">03. VISUALIZATION & TOOLS</h3>
+    <div class="skills-container">
+        <div class="skill-chip">Power BI</div>
+        <div class="skill-chip">Tableau</div>
+        <div class="skill-chip">Web Scraping</div>
+        <div class="skill-chip">Streamlit</div>
+        <div class="skill-chip">Jupyter Notebooks</div>
+        <div class="skill-chip">Advanced Excel</div>
+        <div class="skill-chip">VBA</div>
+    </div>
+</section>
+
+<section class="container" id="projects">
+    <h2 class="mono">// DEPLOYED_WORK</h2>
+    <div class="project-grid">
+        <div class="project-card">
+            <div class="mono" style="font-size: 0.7rem; color: var(--text-dim);">ML_WEB_APP</div>
+            <h3><a href="https://heart-attack-risk-predictor-by-ravi-prajapati.streamlit.app/" class="project-title-link" target="_blank">Heart Attack Risk Predictor <i class="fas fa-link" style="font-size: 0.8rem;"></i></a></h3>
+            <p>Built an interactive web application to estimate risk from health and lifestyle inputs.</p>
+            <p style="font-size: 0.85rem; color: var(--accent);">• 96.89% Model Accuracy</p>
+        </div>
+
+        <div class="project-card">
+            <div class="mono" style="font-size: 0.7rem; color: var(--text-dim);">SQL_SOLUTION</div>
+            <h3><a href="https://vitalflow-by-ravi-prajapati.streamlit.app/" class="project-title-link" target="_blank">VitalFlow: Blood Bank System <i class="fas fa-link" style="font-size: 0.8rem;"></i></a></h3>
+            <p>Interactive application for donor registration and real-time inventory tracking.</p>
+            <p style="font-size: 0.85rem; color: var(--accent);">• Optimized Search Functionality</p>
+        </div>
+    </div>
+</section>
+
+<section class="container" id="education">
+    <h2 class="mono">// ACADEMIC_HISTORY</h2>
+    <div class="timeline-item">
+        <h3>B.E. in Computer Science & Engineering (Data Science)</h3>
+        <p class="mono" style="color: var(--accent);">2023 — 2027</p>
+        <p>Gujarat Technological University, Ahmedabad</p>
+    </div>
+</section>
+
+<footer>
+    <p class="mono">📍 Ahmedabad, Gujarat | RAVI PRAJAPATI &copy; 2026</p>
+</footer>
+
+<script>
+    const canvas = document.getElementById('neural-canvas');
+    const ctx = canvas.getContext('2d');
+    const toggle = document.getElementById('theme-toggle');
+    let particles = [];
+
+    new Typed('#typed', {
+        strings: ['Data Science', 'Machine Learning', 'Data Analysis', 'Predictive Modeling'],
+        typeSpeed: 65, backSpeed: 45, loop: true
+    });
+
+    function init() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+
+    class Particle {
+        constructor() {
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height;
+            this.vx = (Math.random() - 0.5) * 0.6;
+            this.vy = (Math.random() - 0.5) * 0.6;
+        }
+        update() {
+            this.x += this.vx; this.y += this.vy;
+            if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+            if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+        }
+    }
+
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        const color = getComputedStyle(document.documentElement).getPropertyValue('--accent');
+        ctx.fillStyle = color; ctx.strokeStyle = color;
+        particles.forEach((p, i) => {
+            p.update();
+            ctx.beginPath(); ctx.arc(p.x, p.y, 1.2, 0, Math.PI * 2); ctx.fill();
+            for (let j = i + 1; j < particles.length; j++) {
+                const d = Math.hypot(p.x - particles[j].x, p.y - particles[j].y);
+                if (d < 110) {
+                    ctx.globalAlpha = 1 - (d / 110);
+                    ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(particles[j].x, particles[j].y);
+                    ctx.lineWidth = 0.5; ctx.stroke();
+                }
+            }
+            ctx.globalAlpha = 1;
+        });
+        requestAnimationFrame(animate);
+    }
+
+    toggle.addEventListener('click', () => {
+        const isLight = document.documentElement.hasAttribute('data-theme');
+        if (isLight) {
+            document.documentElement.removeAttribute('data-theme');
+            toggle.innerHTML = '<i class="fas fa-moon"></i>';
+        } else {
+            document.documentElement.setAttribute('data-theme', 'light');
+            toggle.innerHTML = '<i class="fas fa-sun"></i>';
+        }
+    });
+
+    window.onresize = init;
+    init();
+    for (let i = 0; i < 85; i++) particles.push(new Particle());
+    animate();
+</script>
+
+</body>
+</html>
