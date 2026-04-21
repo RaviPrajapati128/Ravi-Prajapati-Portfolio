@@ -4,374 +4,404 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ravi Prajapati | Data Science Portfolio</title>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Space+Grotesk:wght@300;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <style>
-        :root {
-            --accent: #00d2ff;
-            --accent-glow: rgba(0, 210, 255, 0.4);
-            --bg: #05070a;
-            --surface: #0d1117;
-            --text-main: #e6edf3;
-            --text-dim: #8b949e;
-        }
-
-        [data-theme="light"] {
-            --bg: #ffffff;
-            --surface: #f0f2f5;
-            --text-main: #1a1a1a;
-            --text-dim: #4b4b4b;
-            --accent: #0077ff;
-        }
-
-        * { box-sizing: border-box; scroll-behavior: smooth; }
-        body { 
-            margin: 0; 
-            font-family: 'Space Grotesk', sans-serif; 
-            background-color: var(--bg); 
-            color: var(--text-main);
-            overflow-x: hidden;
-            transition: background-color 0.3s;
-        }
-
-        #neural-canvas {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            z-index: -1;
-            pointer-events: none;
-        }
-
-        h1, h2, h3, .mono { font-family: 'JetBrains Mono', monospace; }
-
-        nav {
-            position: fixed;
-            top: 0; width: 100%;
-            background: rgba(5, 7, 10, 0.85);
-            backdrop-filter: blur(12px);
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center;
-            padding: 0.8rem 2rem; 
-            z-index: 1000;
-            border-bottom: 1px solid rgba(0, 210, 255, 0.1);
-        }
-        [data-theme="light"] nav { background: rgba(255, 255, 255, 0.85); }
-
-        .nav-links { display: flex; align-items: center; }
-
-        nav a { 
-            margin: 0 15px; 
-            text-decoration: none; 
-            color: var(--text-dim); 
-            font-size: 0.85rem;
-            font-weight: 600;
-            letter-spacing: 1px;
-            transition: 0.3s;
-        }
-        nav a:hover { color: var(--accent); text-shadow: 0 0 10px var(--accent); }
-
-        #theme-toggle {
-            background: none;
-            border: 1px solid var(--accent);
-            color: var(--accent);
-            padding: 6px 12px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 0.8rem;
-            transition: 0.3s;
-        }
-
-        .download-btn {
-            background: var(--accent);
-            color: #fff;
-            padding: 8px 18px;
-            border-radius: 5px;
-            text-decoration: none;
-            font-size: 0.8rem;
-            font-family: 'JetBrains Mono', monospace;
-            font-weight: bold;
-            transition: 0.3s;
-            border: none;
-        }
-        .download-btn:hover { 
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px var(--accent-glow);
-        }
-
-        .container {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 100px 20px;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .hero-content { border-left: 3px solid var(--accent); padding-left: 30px; }
-        .glitch {
-            font-size: clamp(2.5rem, 6vw, 4.5rem);
-            color: var(--accent);
-            margin: 0;
-        }
-
-        .skills-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            margin-top: 20px;
-            margin-bottom: 30px;
-        }
-        .skill-chip {
-            background: rgba(0, 210, 255, 0.05);
-            border: 1px solid rgba(0, 210, 255, 0.2);
-            padding: 8px 18px;
-            border-radius: 50px;
-            font-size: 0.85rem;
-            transition: 0.3s;
-            color: var(--text-main);
-        }
-        .skill-chip:hover {
-            background: var(--accent);
-            color: #fff;
-            transform: scale(1.05);
-        }
-
-        .project-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 25px;
-        }
-        .project-card {
-            background: var(--surface);
-            padding: 30px;
-            border-radius: 16px;
-            border: 1px solid #21262d;
-            transition: 0.4s;
-            display: flex;
-            flex-direction: column;
-        }
-        .project-card:hover { border-color: var(--accent); transform: translateY(-8px); }
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap');
         
-        .live-link {
-            margin-top: auto;
-            display: inline-flex;
+        :root {
+            --accent: #00F2FF; /* Cyber Cyan */
+            --bg: #0D0D0D;
+            --card-bg: #161616;
+            --accent-glow: rgba(0, 242, 255, 0.2);
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg);
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        .text-outline {
+            color: transparent;
+            -webkit-text-stroke: 1px rgba(0, 242, 255, 0.3);
+        }
+
+        .glass-nav {
+            background: rgba(22, 22, 22, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Essential Grid and Tile CSS */
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 1.5rem;
+            perspective: 1000px;
+        }
+
+        .tech-tile {
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            border-radius: 1.5rem;
+            padding: 2rem 1rem;
+            display: flex;
+            flex-direction: column;
             align-items: center;
-            gap: 8px;
-            color: var(--accent);
-            text-decoration: none;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.8rem;
-            font-weight: bold;
+            justify-content: center;
+            gap: 1rem;
+            transition: transform 0.1s ease-out, border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+            will-change: transform;
+            transform-style: preserve-3d;
         }
 
-        .project-title-link {
-            color: inherit;
-            text-decoration: none;
+        .tech-tile img { 
+            width: 40px; 
+            height: 40px; 
+            pointer-events: none; 
+            transform: translateZ(20px);
         }
-        .project-title-link:hover {
-            color: var(--accent);
+        
+        .tech-tile span { 
+            font-size: 10px; 
+            font-weight: 700; 
+            text-transform: uppercase; 
+            color: #9ca3af; 
+            letter-spacing: 0.1em;
+            transform: translateZ(10px);
         }
 
-        .timeline-item {
-            padding: 20px;
-            border-left: 2px dashed var(--accent);
-            margin-left: 10px;
-            position: relative;
+        .tech-tile:hover {
+            border-color: var(--accent);
+            background: rgba(0, 242, 255, 0.05);
+            box-shadow: 0 20px 40px -15px var(--accent-glow);
         }
-        .timeline-item::before {
-            content: '';
+
+        .tech-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            transition: all 0.3s ease;
+        }
+
+        .tech-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px -10px var(--accent-glow);
+        }
+
+        .reveal { opacity: 0; transform: translateY(30px); }
+
+        .hero-glow {
             position: absolute;
-            left: -7px; top: 25px;
-            width: 12px; height: 12px;
-            background: var(--accent);
-            border-radius: 50%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(0, 242, 255, 0.15) 0%, transparent 70%);
+            z-index: -1;
         }
 
-        .socials { margin-top: 30px; }
-        .socials a {
-            color: var(--text-main);
-            font-size: 1.5rem;
-            margin-right: 20px;
-            transition: 0.3s;
+        #dropdown.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
         }
-        .socials a:hover { color: var(--accent); }
 
-        footer { text-align: center; padding: 50px; color: var(--text-dim); font-size: 0.8rem; }
+        /* Update dynamic helper classes to Cyan */
+        .text-accent { color: var(--accent); }
+        .bg-accent { background-color: var(--accent); }
+        .border-accent { border-color: var(--accent); }
     </style>
 </head>
 <body>
 
-<canvas id="neural-canvas"></canvas>
+    <nav class="fixed w-full z-50 px-6 py-4">
+        <div class="max-w-7xl mx-auto flex justify-between items-center glass-nav rounded-2xl px-8 py-3">
+            <div class="text-xl font-extrabold tracking-tighter">/ RP</div>
+            
+            <div class="hidden md:flex space-x-10 text-[10px] font-bold uppercase tracking-widest text-gray-400">
+                <a href="#about" class="hover:text-white transition">About</a>
+                <a href="#stack" class="hover:text-white transition">Stack</a>
+                <a href="#work" class="hover:text-white transition">Work</a>
+                <a href="#contact" class="hover:text-white transition">Contact</a>
+            </div>
 
-<nav>
-    <button id="theme-toggle"><i class="fas fa-moon"></i></button>
-    <div class="nav-links">
-        <a href="#home">HOME</a>
-        <a href="#skills">SKILLS</a>
-        <a href="#projects">PROJECTS</a>
-        <a href="#education">EDUCATION</a>
-    </div>
-    <a href="https://drive.google.com/file/d/1PDj24vOjxMQh--4Yrf391taa0_rZ8Xs5/view?usp=drive_link" class="download-btn" target="_blank">RESUME <i class="fas fa-download"></i></a>
-</nav>
+            <div class="flex items-center gap-4 relative">
+                <a href="https://linkedin.com" target="_blank" class="hidden md:block">
+                    <i data-lucide="linkedin" class="w-4 h-4 text-gray-400 hover:text-white"></i>
+                </a>
+                
+                <div class="relative">
+                    <button id="menuBtn" class="bg-white/5 p-2 rounded-lg border border-white/10 hover:bg-white/10 transition">
+                        <i data-lucide="more-vertical" class="w-4 h-4"></i>
+                    </button>
 
-<section class="container" id="home">
-    <div class="hero-content">
-        <p class="mono" style="color: var(--accent); letter-spacing: 3px;">[ SYSTEM READY ]</p>
-        <h1 class="glitch">RAVI PRAJAPATI</h1>
-        <p style="font-size: 1.4rem; color: var(--text-dim); max-width: 700px;">
-            Expertise in <span id="typed" style="color: var(--accent); font-weight: 600;"></span>
-        </p>
-        <p style="max-width: 600px;">
-            Enthusiastic Data Science fresher dedicated to transforming raw data into actionable insights through Python, SQL, and machine learning.
-        </p>
-        <div class="socials">
-            <a href="https://github.com/RaviPrajapati128" target="_blank"><i class="fab fa-github"></i></a>
-            <a href="https://www.linkedin.com/in/ravi-prajapati-301804388/" target="_blank"><i class="fab fa-linkedin"></i></a>
-            <a href="mailto:prajapatiravi74753@gmail.com"><i class="fas fa-envelope"></i></a>
+                    <div id="dropdown" class="absolute right-0 mt-3 w-52 bg-[#161616] border border-white/10 rounded-xl py-2 opacity-0 invisible translate-y-2 transition-all duration-300 z-50 shadow-2xl">
+                        <a href="Ravi_Prajapati_Resume.pdf" download class="flex items-center gap-3 px-4 py-3 text-[10px] font-bold uppercase tracking-widest text-white hover:bg-[#00F2FF] hover:text-black transition">
+                            <i data-lucide="download" class="w-4 h-4"></i> Download Resume
+                        </a>
+                        <hr class="border-white/5 my-1">
+                        <a href="https://github.com/Ravi-Prajapati-Portfolio" target="_blank" class="flex items-center gap-3 px-4 py-3 text-[10px] font-bold uppercase tracking-widest text-gray-400 hover:text-white hover:bg-white/5 transition">
+                            <i data-lucide="github" class="w-4 h-4"></i> GitHub Profile
+                        </a>
+                        <a href="https://linkedin.com" target="_blank" class="flex items-center gap-3 px-4 py-3 text-[10px] font-bold uppercase tracking-widest text-gray-400 hover:text-white hover:bg-white/5 transition">
+                            <i data-lucide="linkedin" class="w-4 h-4"></i> LinkedIn
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-</section>
+    </nav>
 
-<section class="container" id="skills">
-    <h2 class="mono">// TECHNICAL_SPECS</h2>
-    
-    <h3 class="mono" style="font-size: 0.9rem; color: var(--accent);">01. PROGRAMMING & LIBRARIES</h3>
-    <div class="skills-container">
-        <div class="skill-chip">Python</div>
-        <div class="skill-chip">SQL</div>
-        <div class="skill-chip">Pandas</div>
-        <div class="skill-chip">NumPy</div>
-        <div class="skill-chip">Matplotlib</div>
-        <div class="skill-chip">Seaborn</div>
-        <div class="skill-chip">Scikit-learn</div>
-    </div>
+    <section class="min-h-screen flex flex-col justify-center px-8 relative overflow-hidden">
+        <div class="hero-glow top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"></div>
+        <div class="max-w-7xl mx-auto w-full">
+            <span class="text-xs font-bold tracking-[0.4em] text-accent mb-6 block uppercase reveal">Hi, I'm</span>
+            <h1 class="text-7xl md:text-[120px] font-extrabold leading-[0.8] mb-4 reveal">RAVI</h1>
+            <h1 class="text-7xl md:text-[120px] font-extrabold leading-[0.8] text-outline mb-10 reveal">PRAJAPATI</h1>
+            <p class="max-w-md text-gray-400 text-sm leading-relaxed mb-10 reveal">
+                Data Science & Machine Learning fresher crafting predictive models and scalable analytical solutions.
+            </p>
+            <div class="flex gap-4 reveal">
+                <a href="#work" class="bg-accent text-black px-8 py-4 rounded-full text-xs font-bold flex items-center gap-2 hover:shadow-[0_0_20px_rgba(0,242,255,0.4)] transition">
+                    Explore My Work <i data-lucide="arrow-down-right" class="w-4 h-4"></i>
+                </a>
+                <a href="mailto:prajapatiravi74753@gmail.com" class="bg-white/5 border border-white/10 text-white px-8 py-4 rounded-full text-xs font-bold hover:bg-white/10 transition">
+                    Let's Work Together
+                </a>
+            </div>
+        </div>
+    </section>
 
-    <h3 class="mono" style="font-size: 0.9rem; color: var(--accent);">02. MACHINE LEARNING & ANALYSIS</h3>
-    <div class="skills-container">
-        <div class="skill-chip">Regression</div>
-        <div class="skill-chip">Classification</div>
-        <div class="skill-chip">Clustering</div>
-        <div class="skill-chip">Predictive Modeling</div>
-        <div class="skill-chip">Model Evaluation</div>
-        <div class="skill-chip">Statistical Analysis</div>
-        <div class="skill-chip">Data Cleaning</div>
-        <div class="skill-chip">Data Wrangling</div>
-        <div class="skill-chip">Exploratory Data Analysis</div>
-    </div>
+    <section id="about" class="py-32 px-8 bg-[#0a0a0a]">
+        <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-20 items-center">
+            <div class="glass-nav p-10 rounded-[2.5rem] border-white/5 reveal">
+                <h3 class="text-3xl font-bold mb-6">I transform raw data into <span class="text-accent">actionable intelligence.</span></h3>
+                <p class="text-gray-400 text-sm leading-relaxed mb-6">
+                    Specializing in building high-performance ML systems that blend statistical rigour with clean architecture to solve real-world challenges.
+                </p>
+                <div class="flex gap-4 border-t border-white/5 pt-8">
+                    <div>
+                        <div class="text-accent mb-2"><i data-lucide="brain"></i></div>
+                        <h4 class="font-bold text-sm">Problem Solving</h4>
+                        <p class="text-[10px] text-gray-500">Breaking down complex datasets into efficient solutions.</p>
+                    </div>
+                    <div>
+                        <div class="text-accent mb-2"><i data-lucide="zap"></i></div>
+                        <h4 class="font-bold text-sm">Predictive Focus</h4>
+                        <p class="text-[10px] text-gray-500">Achieving high model accuracy through advanced data wrangling.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="reveal">
+                <h2 class="text-5xl font-extrabold mb-6">My Approach</h2>
+                <div class="w-20 h-1 bg-accent mb-8"></div>
+                <p class="text-gray-400 leading-relaxed italic">
+                    "Continuously learning and contributing to organizational success through data-driven insights."
+                </p>
+            </div>
+        </div>
+    </section>
 
-    <h3 class="mono" style="font-size: 0.9rem; color: var(--accent);">03. VISUALIZATION & TOOLS</h3>
-    <div class="skills-container">
-        <div class="skill-chip">Power BI</div>
-        <div class="skill-chip">Tableau</div>
-        <div class="skill-chip">Web Scraping</div>
-        <div class="skill-chip">Streamlit</div>
-        <div class="skill-chip">Jupyter Notebooks</div>
-        <div class="skill-chip">Advanced Excel</div>
-        <div class="skill-chip">VBA</div>
-    </div>
-</section>
+    <section id="stack" class="py-32 px-8">
+        <div class="max-w-7xl mx-auto text-center mb-20">
+            <h2 class="text-5xl font-extrabold mb-4 uppercase tracking-tighter">Tech Stack</h2>
+            <p class="text-gray-500 text-[10px] tracking-[0.3em] uppercase font-bold text-accent">[ Data Stream • Machine Learning • Predictive Modeling ]</p>
+        </div>
+        
+        <div class="max-w-5xl mx-auto bento-grid">
+            <div class="tech-tile reveal">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python">
+                <span>Python</span>
+            </div>
+            <div class="tech-tile reveal">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" alt="SQL">
+                <span>SQL</span>
+            </div>
+            <div class="tech-tile reveal">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/numpy/numpy-original.svg" alt="NumPy">
+                <span>NumPy</span>
+            </div>
+            <div class="tech-tile reveal">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pandas/pandas-original.svg" alt="Pandas">
+                <span>Pandas</span>
+            </div>
+            <div class="tech-tile reveal">
+                <img src="https://seaborn.pydata.org/_images/logo-mark-lightbg.svg" alt="Seaborn">
+                <span>Seaborn</span>
+            </div>
+            <div class="tech-tile reveal">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/matplotlib/matplotlib-original.svg" alt="Matplotlib">
+                <span>Matplotlib</span>
+            </div>
+            <div class="tech-tile reveal">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Scikit_learn_logo_small.svg" class="w-12" alt="Scikit-Learn">
+                <span>Scikit-Learn</span>
+            </div>
+            <div class="tech-tile reveal">
+                <img src="https://streamlit.io/images/brand/streamlit-mark-color.svg" alt="Streamlit">
+                <span>Streamlit</span>
+            </div>
+            <div class="tech-tile reveal">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jupyter/jupyter-original.svg" alt="Jupyter">
+                <span>Jupyter</span>
+            </div>
+            <div class="tech-tile reveal">
+                <img src="https://cdn.worldvectorlogo.com/logos/tableau-software.svg" alt="Tableau">
+                <span>Tableau</span>
+            </div>
+            <div class="tech-tile reveal">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/c/c9/Power_bi_logo_black.svg" class="w-10 h-10" alt="Power BI">
+                <span>Power BI</span>
+            </div>
+            <div class="tech-tile reveal">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" class="invert opacity-60" alt="GitHub">
+                <span>GitHub</span>
+            </div>
+            <div class="tech-tile reveal">
+                <img src="https://img.icons8.com/color/48/microsoft-excel-2019--v1.png" alt="Excel">
+                <span>Excel</span>
+            </div>
+        </div>
+    </section>
 
-<section class="container" id="projects">
-    <h2 class="mono">// DEPLOYED_WORK</h2>
-    <div class="project-grid">
-        <div class="project-card">
-            <div class="mono" style="font-size: 0.7rem; color: var(--text-dim);">ML_WEB_APP</div>
-            <h3><a href="https://heart-attack-risk-predictor-by-ravi-prajapati.streamlit.app/" class="project-title-link" target="_blank">Heart Attack Risk Predictor <i class="fas fa-link" style="font-size: 0.8rem;"></i></a></h3>
-            <p>Built an interactive web application to estimate risk from health and lifestyle inputs.</p>
-            <p style="font-size: 0.85rem; color: var(--accent);">• 96.89% Model Accuracy</p>
+    <section id="work" class="py-32 px-8">
+        <div class="max-w-7xl mx-auto mb-20 text-center">
+            <h2 class="text-5xl font-extrabold mb-4 uppercase">Featured Projects</h2>
+            <p class="text-gray-500 text-sm">A curated collection of my work — blending ML, optimization, and real-world solving.</p>
         </div>
 
-        <div class="project-card">
-            <div class="mono" style="font-size: 0.7rem; color: var(--text-dim);">SQL_SOLUTION</div>
-            <h3><a href="https://vitalflow-by-ravi-prajapati.streamlit.app/" class="project-title-link" target="_blank">VitalFlow: Blood Bank System <i class="fas fa-link" style="font-size: 0.8rem;"></i></a></h3>
-            <p>Interactive application for donor registration and real-time inventory tracking.</p>
-            <p style="font-size: 0.85rem; color: var(--accent);">• Optimized Search Functionality</p>
+        <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-10">
+            <div class="tech-card p-10 rounded-[3rem] reveal group">
+                <div class="aspect-video bg-white/5 rounded-[2rem] mb-8 overflow-hidden relative">
+                    <img src="https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?auto=format&fit=crop&q=80&w=800" alt="Crop Recommendation" class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity duration-500">
+                    <div class="absolute inset-0 bg-black/40 group-hover:bg-transparent transition-colors"></div>
+                </div>
+                <h3 class="text-3xl font-bold mb-4">Crop Recommendation</h3>
+                <p class="text-gray-400 text-sm mb-6 leading-relaxed">
+                    KNN Classifier achieving <b class="text-accent">97.04% accuracy</b> to recommend optimal crops based on soil nutrients and climatic conditions.
+                </p>
+                <div class="flex gap-2 mb-8">
+                    <span class="text-[10px] border border-white/10 px-3 py-1 rounded-full uppercase">Python</span>
+                    <span class="text-[10px] border border-white/10 px-3 py-1 rounded-full uppercase">ML</span>
+                </div>
+                <a href="#" class="bg-white text-black px-6 py-3 rounded-full text-xs font-bold inline-flex items-center gap-2 group-hover:bg-accent group-hover:text-black transition">Live Demo <i data-lucide="arrow-up-right" class="w-4 h-4"></i></a>
+            </div>
+
+            <div class="tech-card p-10 rounded-[3rem] reveal group">
+                <div class="aspect-video bg-white/5 rounded-[2rem] mb-8 overflow-hidden relative">
+                    <img src="https://thumbs.dreamstime.com/b/human-heart-system-detailed-anatomical-medical-illustration-detailed-anatomical-illustration-human-heart-system-perfect-341148040.jpg" alt="Heart Risk Predictor" class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity duration-500">
+                    <div class="absolute inset-0 bg-black/40 group-hover:bg-transparent transition-colors"></div>
+                </div>
+                <h3 class="text-3xl font-bold mb-4">Heart Risk Predictor</h3>
+                <p class="text-gray-400 text-sm mb-6 leading-relaxed">
+                    Estimating cardiovascular risk scores with <b class="text-accent">96.89% accuracy</b> using Scikit-learn regression models and interactive dashboards.
+                </p>
+                <div class="flex gap-2 mb-8">
+                    <span class="text-[10px] border border-white/10 px-3 py-1 rounded-full uppercase">Regression</span>
+                    <span class="text-[10px] border border-white/10 px-3 py-1 rounded-full uppercase">Streamlit</span>
+                </div>
+                <a href="#" class="bg-white text-black px-6 py-3 rounded-full text-xs font-bold inline-flex items-center gap-2 group-hover:bg-accent group-hover:text-black transition">Live Demo <i data-lucide="arrow-up-right" class="w-4 h-4"></i></a>
+            </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<section class="container" id="education">
-    <h2 class="mono">// ACADEMIC_HISTORY</h2>
-    <div class="timeline-item">
-        <h3>B.E. in Computer Science & Engineering (Data Science)</h3>
-        <p class="mono" style="color: var(--accent);">2023 — 2027</p>
-        <p>Gujarat Technological University, Ahmedabad</p>
-    </div>
-</section>
+    <section id="contact" class="py-32 px-8 text-center bg-[#0a0a0a]">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-5xl md:text-7xl font-extrabold mb-6 reveal uppercase">Let's build something extraordinary</h2>
+            <p class="text-accent text-xs font-bold tracking-widest uppercase mb-12 reveal">Have an idea? Let's turn it into reality.</p>
+            
+            <div class="grid md:grid-cols-2 gap-4 text-left reveal">
+                <div class="bg-white/5 p-6 rounded-2xl border border-white/5 focus-within:border-accent transition">
+                    <label class="text-[10px] font-bold uppercase text-gray-500 mb-2 block">Your Name</label>
+                    <input type="text" placeholder="What should I call you?" class="bg-transparent w-full outline-none text-white text-sm">
+                </div>
+                <div class="bg-white/5 p-6 rounded-2xl border border-white/5 focus-within:border-accent transition">
+                    <label class="text-[10px] font-bold uppercase text-gray-500 mb-2 block">Email</label>
+                    <input type="email" placeholder="Where can I reach you?" class="bg-transparent w-full outline-none text-white text-sm">
+                </div>
+                <div class="bg-white/5 p-6 rounded-2xl border border-white/5 md:col-span-2 focus-within:border-accent transition">
+                    <label class="text-[10px] font-bold uppercase text-gray-500 mb-2 block">Project Details</label>
+                    <textarea placeholder="Tell me about your idea, goals, or what you're looking to build..." class="bg-transparent w-full outline-none text-white text-sm h-32"></textarea>
+                </div>
+            </div>
+            
+            <button class="mt-8 bg-accent text-black w-full py-5 rounded-2xl font-bold uppercase tracking-widest text-xs hover:shadow-[0_0_30px_rgba(0,242,255,0.3)] transition reveal">Send Message</button>
+        </div>
+    </section>
 
-<footer>
-    <p class="mono">📍 Ahmedabad, Gujarat | RAVI PRAJAPATI &copy; 2026</p>
-</footer>
+    <footer class="py-10 px-8 border-t border-white/5 text-center text-[10px] text-gray-600 tracking-widest uppercase">
+        © 2026 Ravi Prajapati • Ahmedabad, Gujarat 
+    </footer>
 
-<script>
-    const canvas = document.getElementById('neural-canvas');
-    const ctx = canvas.getContext('2d');
-    const toggle = document.getElementById('theme-toggle');
-    let particles = [];
+    <script>
+        lucide.createIcons();
+        gsap.registerPlugin(ScrollTrigger);
 
-    new Typed('#typed', {
-        strings: ['Data Science', 'Machine Learning', 'Data Analysis', 'Predictive Modeling'],
-        typeSpeed: 65, backSpeed: 45, loop: true
-    });
+        // Dropdown Logic
+        const menuBtn = document.getElementById('menuBtn');
+        const dropdown = document.getElementById('dropdown');
 
-    function init() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-    }
-
-    class Particle {
-        constructor() {
-            this.x = Math.random() * canvas.width;
-            this.y = Math.random() * canvas.height;
-            this.vx = (Math.random() - 0.5) * 0.6;
-            this.vy = (Math.random() - 0.5) * 0.6;
-        }
-        update() {
-            this.x += this.vx; this.y += this.vy;
-            if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
-            if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
-        }
-    }
-
-    function animate() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        const color = getComputedStyle(document.documentElement).getPropertyValue('--accent');
-        ctx.fillStyle = color; ctx.strokeStyle = color;
-        particles.forEach((p, i) => {
-            p.update();
-            ctx.beginPath(); ctx.arc(p.x, p.y, 1.2, 0, Math.PI * 2); ctx.fill();
-            for (let j = i + 1; j < particles.length; j++) {
-                const d = Math.hypot(p.x - particles[j].x, p.y - particles[j].y);
-                if (d < 110) {
-                    ctx.globalAlpha = 1 - (d / 110);
-                    ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(particles[j].x, particles[j].y);
-                    ctx.lineWidth = 0.5; ctx.stroke();
-                }
-            }
-            ctx.globalAlpha = 1;
+        menuBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            dropdown.classList.toggle('active');
         });
-        requestAnimationFrame(animate);
-    }
 
-    toggle.addEventListener('click', () => {
-        const isLight = document.documentElement.hasAttribute('data-theme');
-        if (isLight) {
-            document.documentElement.removeAttribute('data-theme');
-            toggle.innerHTML = '<i class="fas fa-moon"></i>';
-        } else {
-            document.documentElement.setAttribute('data-theme', 'light');
-            toggle.innerHTML = '<i class="fas fa-sun"></i>';
-        }
-    });
+        document.addEventListener('click', () => {
+            dropdown.classList.remove('active');
+        });
 
-    window.onresize = init;
-    init();
-    for (let i = 0; i < 85; i++) particles.push(new Particle());
-    animate();
-</script>
+        // Scroll Reveal Animations
+        gsap.utils.toArray('section').forEach(section => {
+            gsap.to(section.querySelectorAll('.reveal'), {
+                scrollTrigger: {
+                    trigger: section,
+                    start: "top 85%",
+                },
+                opacity: 1,
+                y: 0,
+                duration: 1,
+                stagger: 0.1,
+                ease: "power4.out"
+            });
+        });
 
+        // Tech Tile Magnetic Animation
+        const tiles = document.querySelectorAll('.tech-tile');
+
+        tiles.forEach(tile => {
+            tile.addEventListener('mousemove', (e) => {
+                const rect = tile.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const rotateX = (y - centerY) / 8;
+                const rotateY = (centerX - x) / 8;
+                
+                gsap.to(tile, {
+                    rotateX: rotateX,
+                    rotateY: rotateY,
+                    scale: 1.05,
+                    duration: 0.3,
+                    ease: "power2.out"
+                });
+            });
+
+            tile.addEventListener('mouseleave', () => {
+                gsap.to(tile, {
+                    rotateX: 0,
+                    rotateY: 0,
+                    scale: 1,
+                    duration: 0.6,
+                    ease: "elastic.out(1, 0.3)"
+                });
+            });
+        });
+    </script>
 </body>
 </html>
